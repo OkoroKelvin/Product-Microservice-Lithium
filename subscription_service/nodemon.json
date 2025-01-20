@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "cmd/app",
+    "internal",
+    "proto",
+    ".env"
+  ],
+  "ext": "go",
+  "exec": "export GO_ENV=local && go run ./cmd/app",
+  "signal": "SIGTERM"
+}

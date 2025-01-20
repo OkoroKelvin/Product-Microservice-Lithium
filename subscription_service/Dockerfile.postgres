@@ -1,0 +1,14 @@
+# Use the official PostgreSQL image
+FROM postgres:15
+
+# Switch to root to ensure we have write permissions
+USER root
+
+# Create the SQL file to enable the extension for all databases
+RUN echo "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";" > /docker-entrypoint-initdb.d/enable_uuid.sql
+
+# Set ownership of the file to the postgres user
+RUN chown postgres:postgres /docker-entrypoint-initdb.d/enable_uuid.sql
+
+# Switch back to the postgres user
+USER postgres

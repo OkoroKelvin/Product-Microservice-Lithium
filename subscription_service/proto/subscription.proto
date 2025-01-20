@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package subscription_service;
+
+option go_package = "./proto";
+
+
+// SubscriptionService Definition
+service SubscriptionService {
+  rpc CreateSubscription (CreateSubscriptionRequest) returns (Subscription);
+  rpc GetSubscription (GetSubscriptionRequest) returns (Subscription);
+  rpc UpdateSubscription (UpdateSubscriptionRequest) returns (Subscription);
+  rpc DeleteSubscription (DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse);
+  rpc ListSubscriptions (ListSubscriptionsRequest) returns (ListSubscriptionsResponse);
+}
+
+message Subscription {
+    optional string id = 1;
+    string product_id = 2;
+    string plan_name = 3;
+    int64 duration = 4;
+    double price = 5;
+    optional string created_at = 6;
+    optional string updated_at = 7;
+}
+
+message CreateSubscriptionRequest {
+    Subscription subscription = 1;
+}
+
+message GetSubscriptionRequest {
+    string id = 1;
+}
+
+message SubscriptionUpdate {
+    string id = 1;
+    optional string product_id = 2;
+    optional string plan_name = 3;
+    optional int64 duration = 4;
+    optional double price = 5;
+}
+
+message UpdateSubscriptionRequest {
+    SubscriptionUpdate subscription = 1;
+}
+
+message DeleteSubscriptionRequest {
+    string id = 1;
+}
+
+message DeleteSubscriptionResponse {
+    bool success = 1;
+}
+
+message PaginationQuery {
+    int64 page = 1;
+    int64 page_size = 2;
+}
+
+message ListSubscriptionsRequest {
+    PaginationQuery pagination_query = 1;
+}
+
+message ListSubscriptionsResponse {
+    repeated Subscription subscriptions = 1;
+}
